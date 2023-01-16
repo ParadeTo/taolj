@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package order;
+
+option go_package = "./pb;pb";
+
+service OrderService {
+  rpc FindOne (OrderById) returns (Order) {}
+}
+
+message OrderById {
+  int32 id = 1;
+}
+
+message Order {
+  int32 id = 1;
+  string name = 2;
+}

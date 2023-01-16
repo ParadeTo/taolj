@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "genfromproto": "protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./src/gen-code --ts_proto_opt=nestJs=true --proto_path=../proto hero.proto",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -27,7 +28,8 @@
     "@nestjs/microservices": "^9.2.1",
     "@nestjs/platform-express": "^9.0.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "ts-proto": "^1.138.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
