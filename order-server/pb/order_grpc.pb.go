@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrderServiceClient interface {
 	FindOne(ctx context.Context, in *OrderById, opts ...grpc.CallOption) (*Order, error)
+	FindOneWithItem(ctx context.Context, in *OrderById, opts ...grpc.CallOption) (*OrderWithItemInfo, error)
 }
 
 type orderServiceClient struct {
@@ -42,11 +43,21 @@ func (c *orderServiceClient) FindOne(ctx context.Context, in *OrderById, opts ..
 	return out, nil
 }
 
+func (c *orderServiceClient) FindOneWithItem(ctx context.Context, in *OrderById, opts ...grpc.CallOption) (*OrderWithItemInfo, error) {
+	out := new(OrderWithItemInfo)
+	err := c.cc.Invoke(ctx, "/order.OrderService/FindOneWithItem", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderServiceServer is the server API for OrderService service.
 // All implementations must embed UnimplementedOrderServiceServer
 // for forward compatibility
 type OrderServiceServer interface {
 	FindOne(context.Context, *OrderById) (*Order, error)
+	FindOneWithItem(context.Context, *OrderById) (*OrderWithItemInfo, error)
 	mustEmbedUnimplementedOrderServiceServer()
 }
 
@@ -56,6 +67,9 @@ type UnimplementedOrderServiceServer struct {
 
 func (UnimplementedOrderServiceServer) FindOne(context.Context, *OrderById) (*Order, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindOne not implemented")
+}
+func (UnimplementedOrderServiceServer) FindOneWithItem(context.Context, *OrderById) (*OrderWithItemInfo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindOneWithItem not implemented")
 }
 func (UnimplementedOrderServiceServer) mustEmbedUnimplementedOrderServiceServer() {}
 
@@ -88,6 +102,24 @@ func _OrderService_FindOne_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderService_FindOneWithItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OrderById)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderServiceServer).FindOneWithItem(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/order.OrderService/FindOneWithItem",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderServiceServer).FindOneWithItem(ctx, req.(*OrderById))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrderService_ServiceDesc is the grpc.ServiceDesc for OrderService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +130,10 @@ var OrderService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FindOne",
 			Handler:    _OrderService_FindOne_Handler,
+		},
+		{
+			MethodName: "FindOneWithItem",
+			Handler:    _OrderService_FindOneWithItem_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

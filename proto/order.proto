@@ -4,8 +4,12 @@ package order;
 
 option go_package = "./pb;pb";
 
+import "google/protobuf/timestamp.proto";
+
 service OrderService {
   rpc FindOne (OrderById) returns (Order) {}
+  rpc FindOneWithItem (OrderById) returns (OrderWithItemInfo) {}
+
 }
 
 message OrderById {
@@ -14,5 +18,17 @@ message OrderById {
 
 message Order {
   int32 id = 1;
-  string name = 2;
+  float price = 2;
+  google.protobuf.Timestamp createTime = 3;
+}
+
+message OrderWithItemInfo {
+  int32 id = 1;
+  float price = 2;
+  google.protobuf.Timestamp createTime = 3;
+  message Item {
+    int32 id = 1;
+    string name = 2;
+  }
+  Item item = 4;
 }
