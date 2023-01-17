@@ -25,11 +25,11 @@ const client1 = new item.ItemService(
 )
 
 client1.findOne({id: 1}, function (err, response) {
-  console.log('Found: ', response)
+  console.log('Found one item: ', response)
 })
 
 client1.findOneWithOrder({id: 1}, function (err, response) {
-  console.log('Found: ', response)
+  console.log('Found one item with order: ', response)
 })
 
 const clientOrder = new order.OrderService(
@@ -37,5 +37,8 @@ const clientOrder = new order.OrderService(
   grpc.credentials.createInsecure()
 )
 clientOrder.findOne({id: 1}, function (err, response) {
-  console.log('Found: ', response)
+  console.log('Found one order: ', response)
+})
+clientOrder.findOneWithItem({id: 1}, function (err, response) {
+  console.log('Found one order with item: ', response)
 })

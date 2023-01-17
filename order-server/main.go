@@ -26,10 +26,9 @@ func (s *Server) FindOne(context.Context, *pb.OrderById) (*pb.Order, error) {
 	return order, nil
 }
 
-func (s *Server) FindOneWithOrder(ctx context.Context, request *pb.OrderById) (*pb.OrderWithItemInfo, error) {
+func (s *Server) FindOneWithItem(ctx context.Context, request *pb.OrderById) (*pb.OrderWithItemInfo, error) {
 	item, _ := itemClient.FindOne(ctx, &pb.ItemById{Id: 1})
-	order := &pb.OrderWithItemInfo{Id: 1, Price: 99.9, CreateTime: timestamppb.Now(), Item: item}
-
+	order := &pb.OrderWithItemInfo{Id: 1, Price: 99.9, CreateTime: timestamppb.Now(), Item: (*pb.OrderWithItemInfo_Item)(item)}
 	return order, nil
 }
 
