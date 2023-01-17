@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OrderServiceClient interface {
 	FindOne(ctx context.Context, in *OrderById, opts ...grpc.CallOption) (*Order, error)
-	FindOneWithItem(ctx context.Context, in *OrderById, opts ...grpc.CallOption) (*OrderWithItemInfo, error)
+	GetOrders(ctx context.Context, in *Pagination, opts ...grpc.CallOption) (*Orders, error)
 }
 
 type orderServiceClient struct {
@@ -43,9 +43,9 @@ func (c *orderServiceClient) FindOne(ctx context.Context, in *OrderById, opts ..
 	return out, nil
 }
 
-func (c *orderServiceClient) FindOneWithItem(ctx context.Context, in *OrderById, opts ...grpc.CallOption) (*OrderWithItemInfo, error) {
-	out := new(OrderWithItemInfo)
-	err := c.cc.Invoke(ctx, "/order.OrderService/FindOneWithItem", in, out, opts...)
+func (c *orderServiceClient) GetOrders(ctx context.Context, in *Pagination, opts ...grpc.CallOption) (*Orders, error) {
+	out := new(Orders)
+	err := c.cc.Invoke(ctx, "/order.OrderService/GetOrders", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (c *orderServiceClient) FindOneWithItem(ctx context.Context, in *OrderById,
 // for forward compatibility
 type OrderServiceServer interface {
 	FindOne(context.Context, *OrderById) (*Order, error)
-	FindOneWithItem(context.Context, *OrderById) (*OrderWithItemInfo, error)
+	GetOrders(context.Context, *Pagination) (*Orders, error)
 	mustEmbedUnimplementedOrderServiceServer()
 }
 
@@ -68,8 +68,8 @@ type UnimplementedOrderServiceServer struct {
 func (UnimplementedOrderServiceServer) FindOne(context.Context, *OrderById) (*Order, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindOne not implemented")
 }
-func (UnimplementedOrderServiceServer) FindOneWithItem(context.Context, *OrderById) (*OrderWithItemInfo, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindOneWithItem not implemented")
+func (UnimplementedOrderServiceServer) GetOrders(context.Context, *Pagination) (*Orders, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrders not implemented")
 }
 func (UnimplementedOrderServiceServer) mustEmbedUnimplementedOrderServiceServer() {}
 
@@ -102,20 +102,20 @@ func _OrderService_FindOne_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OrderService_FindOneWithItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OrderById)
+func _OrderService_GetOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Pagination)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServiceServer).FindOneWithItem(ctx, in)
+		return srv.(OrderServiceServer).GetOrders(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/order.OrderService/FindOneWithItem",
+		FullMethod: "/order.OrderService/GetOrders",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).FindOneWithItem(ctx, req.(*OrderById))
+		return srv.(OrderServiceServer).GetOrders(ctx, req.(*Pagination))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -132,8 +132,8 @@ var OrderService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OrderService_FindOne_Handler,
 		},
 		{
-			MethodName: "FindOneWithItem",
-			Handler:    _OrderService_FindOneWithItem_Handler,
+			MethodName: "GetOrders",
+			Handler:    _OrderService_GetOrders_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

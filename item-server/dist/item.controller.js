@@ -11,21 +11,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ItemController = void 0;
 const common_1 = require("@nestjs/common");
-const rxjs_1 = require("rxjs");
 const item_1 = require("./gen-code/item");
 const item_service_1 = require("./item.service");
 const items = [
     { id: 1, name: 'John' },
-    { id: 2, name: 'Doe' },
+    { id: 2, name: 'Doe' }
 ];
 let ItemController = class ItemController {
     constructor(itemService) {
         this.itemService = itemService;
     }
-    async findOneWithOrder(request) {
-        const order = await (0, rxjs_1.lastValueFrom)(this.itemService.orderClient.findOne({ id: 1 }));
-        const item = items.find(({ id }) => id === request.id);
-        return Object.assign(Object.assign({}, item), { order });
+    getItems(request) {
+        console.log(request);
+        return { list: items };
     }
     findOne(data) {
         return items.find(({ id }) => id === data.id);

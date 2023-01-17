@@ -4,6 +4,6 @@ import { ItemController } from './item.controller';
 
 @Module({
   controllers: [ItemController],
-  providers: [ItemService],
+  providers: [ItemService]
 })
 export class AppModule {}
