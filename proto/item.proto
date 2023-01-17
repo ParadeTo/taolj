@@ -8,7 +8,6 @@ import "order.proto";
 
 service ItemService {
   rpc FindOne (ItemById) returns (Item) {}
-  rpc FindOneWithOrder (ItemById) returns (ItemWithOrderInfo) {}
 }
 
 message ItemById {
