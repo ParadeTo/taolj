@@ -1,6 +1,4 @@
-import { Controller, Inject } from '@nestjs/common';
-import { ClientGrpc } from '@nestjs/microservices';
-import { lastValueFrom, Observable } from 'rxjs';
+import { Controller } from '@nestjs/common';
 import { Pagination } from './gen-code/common';
 import {
   Item,
@@ -9,7 +7,6 @@ import {
   ItemServiceControllerMethods
 } from './gen-code/item';
 import { ItemById } from './gen-code/item';
-import { ItemService } from './item.service';
 
 const items = [
   { id: 1, name: 'John' },
@@ -19,10 +16,7 @@ const items = [
 @Controller('item')
 @ItemServiceControllerMethods()
 export class ItemController implements ItemServiceController {
-  constructor(private itemService: ItemService) {}
   getItems(request: Pagination): Items {
-    console.log(request);
-
     return { list: items };
   }
   findOne(data: ItemById): Item {
