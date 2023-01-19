@@ -1,0 +1,13 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""item"""
+type Item {
+  id: ID!
+  name: String!
+}
+
+type Query {
+  item(id: ID!): Item!
+}

@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "./pb;pb";
+
+message Pagination {
+  int32 page = 1;
+  int32 pageSize = 2;
+}

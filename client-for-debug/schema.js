@@ -37,9 +37,6 @@ const clientOrder = new order.OrderService(
   'localhost:9002',
   grpc.credentials.createInsecure()
 )
-// clientOrder.findOne({id: 1}, function (err, response) {
-//   console.log('Found one order: ', response)
-// })
 
 const Item = new GraphQLObjectType({
   name: 'item',
@@ -65,7 +62,7 @@ const Order = new GraphQLObjectType({
     createTime: {
       type: GraphQLInt,
     },
-    item: {type: Item},
+    items: {type: new GraphQLList(Item)},
   },
 })
 
@@ -85,7 +82,6 @@ const RootQueries = new GraphQLObjectType({
       resolve: async (_, args, a, b) => {
         return new Promise((resolve, reject) => {
           clientItem.getItems({page: 1, pageSize: 1}, (err, rsp) => {
-            // console.log(err, rsp)
             resolve((rsp && rsp.list) || [])
           })
         })
@@ -101,16 +97,28 @@ const RootQueries = new GraphQLObjectType({
       resolve: async (root, args, context, info) => {
         const fields = graphqlFields(info)
         console.log(fields)
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           let order
-          clientOrder.findOne(args, (err, rsp) => {
+          clientOrder.findOne(args, async (err, rsp) => {
             order = rsp
-            if (fields.hasOwnProperty('item')) {
-              console.log(1)
-              clientItem.findOne({id: rsp.itemId}, (err, rsp) => {
-                order.item = rsp
-                resolve(order)
-              })
+            if (fields.hasOwnProperty('items')) {
+              const promises = []
+              // Get items info of a order
+              for (let i = 0; i < rsp.itemIds.length; i++) {
+                const itemId = rsp.itemIds[i]
+                console.log(itemId)
+
+                promises.push(
+                  new Promise((resolve) => {
+                    clientItem.findOne({id: itemId}, (err, rsp) => {
+                      resolve(rsp)
+                    })
+                  })
+                )
+              }
+              const items = await Promise.all(promises)
+              order.items = items
+              resolve(order)
               return
             }
             resolve(order)

@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net"
 	"order-server/pb"
@@ -17,9 +16,8 @@ type Server struct {
 	pb.UnimplementedOrderServiceServer
 }
 
-func (s *Server) FindOne(context.Context, *pb.OrderById) (*pb.Order, error) {
-	fmt.Println("FindOne")
-	order := &pb.Order{Id: 1, Price: 99.9, CreateTime: time.Now().Unix(), ItemId: 1}
+func (s *Server) FindOne(ctx context.Context, request *pb.OrderById) (*pb.Order, error) {
+	order := &pb.Order{Id: 1, Price: 99.9, CreateTime: time.Now().Unix(), ItemIds: []int32{1, 2}}
 	return order, nil
 }
 

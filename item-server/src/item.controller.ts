@@ -9,8 +9,8 @@ import {
 import { ItemById } from './gen-code/item';
 
 const items = [
-  { id: 1, name: 'John' },
-  { id: 2, name: 'Doe' }
+  { id: 1, name: 'Banana Peel' },
+  { id: 2, name: 'Waste Paper' }
 ];
 
 @Controller('item')
