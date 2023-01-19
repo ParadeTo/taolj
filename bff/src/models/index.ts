@@ -4,6 +4,7 @@ import {
   ObjectType,
   Float,
   GraphQLTimestamp,
+  Int,
 } from '@nestjs/graphql';
 
 @ObjectType({ description: 'item' })
@@ -13,6 +14,9 @@ export class Item {
 
   @Field()
   name: string;
+
+  @Field()
+  url: string;
 }
 
 @ObjectType({ description: 'order' })
@@ -23,7 +27,7 @@ export class Order {
   @Field(() => Float)
   price: number;
 
-  @Field(() => GraphQLTimestamp)
+  @Field(() => Int)
   createTime: number;
 
   @Field(() => [Item])

@@ -10,8 +10,16 @@ exports.ItemController = void 0;
 const common_1 = require("@nestjs/common");
 const item_1 = require("./gen-code/item");
 const items = [
-    { id: 1, name: 'John' },
-    { id: 2, name: 'Doe' }
+    {
+        id: 1,
+        name: 'Banana Peel',
+        url: 'https://images.indianexpress.com/2021/10/banana-peel-1200.jpg'
+    },
+    {
+        id: 2,
+        name: 'Waste Paper',
+        url: 'https://www.wpt-nl.com/images/module_image/img1_800_600_1593777835.jpg'
+    }
 ];
 let ItemController = class ItemController {
     getItems(request) {

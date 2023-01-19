@@ -6,8 +6,19 @@
 type Item {
   id: ID!
   name: String!
+  url: String!
+}
+
+"""order"""
+type Order {
+  id: ID!
+  price: Float!
+  createTime: Int!
+  items: [Item!]!
 }
 
 type Query {
   item(id: ID!): Item!
+  items(page: Int!, pageSize: Int!): [Item!]!
+  order(id: ID!): Order!
 }

@@ -9,8 +9,16 @@ import {
 import { ItemById } from './gen-code/item';
 
 const items = [
-  { id: 1, name: 'Banana Peel' },
-  { id: 2, name: 'Waste Paper' }
+  {
+    id: 1,
+    name: 'Banana Peel',
+    url: 'https://images.indianexpress.com/2021/10/banana-peel-1200.jpg'
+  },
+  {
+    id: 2,
+    name: 'Waste Paper',
+    url: 'https://www.wpt-nl.com/images/module_image/img1_800_600_1593777835.jpg'
+  }
 ];
 
 @Controller('item')

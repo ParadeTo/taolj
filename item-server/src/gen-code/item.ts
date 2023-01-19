@@ -12,6 +12,7 @@ export interface ItemById {
 export interface Item {
   id: number;
   name: string;
+  url: string;
 }
 
 export interface Items {

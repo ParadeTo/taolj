@@ -23,6 +23,9 @@ import { RPCService } from './rpc.service';
           url: 'localhost:9002',
           package: 'order',
           protoPath: join(__dirname, '../../proto/order.proto'),
+          loader: {
+            longs: Number,
+          },
         },
       },
     ]),

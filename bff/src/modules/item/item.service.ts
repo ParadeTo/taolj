@@ -1,11 +1,5 @@
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
-import { ClientGrpc } from '@nestjs/microservices';
-import { OrderServiceClient, ORDER_SERVICE_NAME } from '../../gen-code/order';
-import {
-  Item,
-  ItemServiceClient,
-  ITEM_SERVICE_NAME,
-} from '../../gen-code/item';
+import { Injectable } from '@nestjs/common';
+import { Item } from '../../gen-code/item';
 import { lastValueFrom } from 'rxjs';
 import { RPCService } from '../rpc/rpc.service';
 
@@ -17,5 +11,12 @@ export class ItemService {
     return await lastValueFrom(
       this.rpcService.itemServiceClient.findOne({ id }),
     );
+  }
+
+  async getItems(page: number, pageSize: number): Promise<Item[]> {
+    const items = await lastValueFrom(
+      this.rpcService.itemServiceClient.getItems({ page, pageSize }),
+    );
+    return items.list;
   }
 }
