@@ -3,11 +3,9 @@ import {
   GqlModuleOptions,
   GraphQLModule,
 } from '@nestjs/graphql';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { Module } from '@nestjs/common';
 import { graphqlHTTP } from 'express-graphql';
 import { ItemModule } from './modules/item/item.module';
-import { join } from 'path';
 import { RPCModule } from './modules/rpc/rpc.module';
 import { OrderModule } from './modules/order/order.module';
 

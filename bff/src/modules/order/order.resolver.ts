@@ -21,7 +21,6 @@ export class OrderResolver {
   @Query(() => Order)
   async order(@Args('id', { type: () => ID }) id: number) {
     const order = await this.orderService.findOne(id);
-    console.log(order);
 
     return order;
   }

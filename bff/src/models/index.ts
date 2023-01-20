@@ -1,11 +1,4 @@
-import {
-  Field,
-  ID,
-  ObjectType,
-  Float,
-  GraphQLTimestamp,
-  Int,
-} from '@nestjs/graphql';
+import { Field, ID, ObjectType, Float, Int } from '@nestjs/graphql';
 
 @ObjectType({ description: 'item' })
 export class Item {
