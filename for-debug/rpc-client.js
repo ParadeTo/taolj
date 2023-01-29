@@ -19,6 +19,9 @@ const clientItem = new item.ItemService(
 )
 
 clientItem.findOne({id: 1}, function (err, response) {
+  console.log('====================================')
+  console.log(err)
+  console.log('====================================')
   console.log('findOne: ', response)
 })
 

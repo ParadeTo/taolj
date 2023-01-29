@@ -1,1 +1,1 @@
-require('./graphql-client')
+require('./rpc-client')

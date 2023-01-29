@@ -28,6 +28,7 @@ export class ItemController implements ItemServiceController {
     return { list: items };
   }
   findOne(data: ItemById): Item {
+    throw new Error('aaa');
     return items.find(({ id }) => id === data.id);
   }
 }
