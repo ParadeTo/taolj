@@ -26,7 +26,6 @@ let ItemController = class ItemController {
         return { list: items };
     }
     findOne(data) {
-        throw new Error('aaa');
         return items.find(({ id }) => id === data.id);
     }
 };

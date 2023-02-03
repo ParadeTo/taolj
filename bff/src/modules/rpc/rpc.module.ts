@@ -28,6 +28,18 @@ import { RPCService } from './rpc.service';
           },
         },
       },
+      {
+        name: 'USER_RPC_CLIENT',
+        transport: Transport.GRPC,
+        options: {
+          url: 'localhost:9003',
+          package: 'user',
+          protoPath: join(__dirname, '../../proto/user.proto'),
+          loader: {
+            longs: Number,
+          },
+        },
+      },
     ]),
   ],
   providers: [RPCService],

@@ -12,8 +12,3 @@ message Pagination {
   int32 page = 1;
   int32 pageSize = 2;
 }
-
-message Response {
-  Code code = 1;
-  string errMsg = 2;
-}

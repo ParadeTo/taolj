@@ -26,3 +26,12 @@ export class Order {
   @Field(() => [Item])
   items?: Item[];
 }
+
+@ObjectType({ description: 'user' })
+export class User {
+  @Field(() => ID)
+  id: number;
+
+  @Field()
+  name: number;
+}

@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import {
   Resolver,
   Query,
@@ -6,12 +7,14 @@ import {
   ResolveField,
   Parent,
 } from '@nestjs/graphql';
+import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { Order } from 'src/models';
 import { Order as OrderFromRPC } from '../../gen-code/Order';
 import { ItemService } from '../item/item.service';
 import { OrderService } from './order.service';
 
 @Resolver(() => Order)
+@UseGuards(JwtAuthGuard)
 export class OrderResolver {
   constructor(
     private readonly orderService: OrderService,

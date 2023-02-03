@@ -8,6 +8,8 @@ import { graphqlHTTP } from 'express-graphql';
 import { ItemModule } from './modules/item/item.module';
 import { RPCModule } from './modules/rpc/rpc.module';
 import { OrderModule } from './modules/order/order.module';
+import { UserModule } from './modules/user/user.module';
+import { UserService } from './modules/user/user.service';
 
 class ExpressGraphQLDriver extends AbstractGraphQLDriver {
   async stop(): Promise<void> {
@@ -31,6 +33,7 @@ class ExpressGraphQLDriver extends AbstractGraphQLDriver {
     RPCModule,
     ItemModule,
     OrderModule,
+    UserModule,
     GraphQLModule.forRoot({
       driver: ExpressGraphQLDriver,
       autoSchemaFile: 'schema.gql',

@@ -21,4 +21,5 @@ type Query {
   item(id: ID!): Item!
   items(page: Int!, pageSize: Int!): [Item!]!
   order(id: ID!): Order!
+  login(username: String!, password: String!): String!
 }
