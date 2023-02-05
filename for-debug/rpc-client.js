@@ -18,36 +18,52 @@ const packageDefinition = protoLoader.loadSync(
 const item = grpc.loadPackageDefinition(packageDefinition).item
 const user = grpc.loadPackageDefinition(packageDefinition).user
 
-const clientItem = new item.ItemService(
-  'localhost:9001',
-  grpc.credentials.createInsecure()
-)
+// const clientItem = new item.ItemService(
+//   'localhost:9001',
+//   grpc.credentials.createInsecure()
+// )
 
-clientItem.findOne({id: 1}, function (err, response) {
-  console.log('====================================')
-  console.log(err)
-  console.log('====================================')
-  console.log('findOne: ', response)
-})
+// clientItem.findOne({id: 1}, function (err, response) {
+//   console.log('====================================')
+//   console.log(err)
+//   console.log('====================================')
+//   console.log('findOne: ', response)
+// })
 
-clientItem.getItems({page: 1, pageSize: 10}, function (err, response) {
-  console.log('getItems: ', response)
-})
+// clientItem.getItems({page: 1, pageSize: 10}, function (err, response) {
+//   console.log('getItems: ', response)
+// })
 
 const clientUser = new user.UserService(
   'localhost:9003',
   grpc.credentials.createInsecure()
 )
 
-clientUser.login({username: 'ayou', password: 1}, function (err, response) {
-  console.log('====================================')
-  console.log(err)
-  console.log('====================================')
-  console.log('login: ', response)
-  clientUser.verify(response, function (err, response) {
+// clientUser.login({username: 'ayou', password: 1}, function (err, response) {
+//   console.log('====================================')
+//   console.log(err)
+//   console.log('====================================')
+//   console.log('login: ', response)
+//   clientUser.verify(response, function (err, response) {
+//     console.log('====================================')
+//     console.log(err)
+//     console.log('====================================')
+//     console.log('verify: ', response)
+//   })
+// })
+
+clientUser.signup(
+  {username: 'ayou', password: 'youxingzhi'},
+  function (err, response) {
     console.log('====================================')
     console.log(err)
     console.log('====================================')
-    console.log('verify: ', response)
-  })
-})
+    console.log('signup: ', response)
+    // clientUser.verify(response, function (err, response) {
+    //   console.log('====================================')
+    //   console.log(err)
+    //   console.log('====================================')
+    //   console.log('verify: ', response)
+    // })
+  }
+)
