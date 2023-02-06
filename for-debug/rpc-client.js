@@ -52,18 +52,34 @@ const clientUser = new user.UserService(
 //   })
 // })
 
-clientUser.signup(
-  {username: 'ayou', password: 'youxingzhi'},
-  function (err, response) {
-    console.log('====================================')
+// clientUser.signup(
+//   {username: 'ayou6', password: 'youxingzhi'},
+//   function (err, response) {
+//     console.log('===============signup=====================')
+//     console.log(err)
+//     console.log('====================================')
+//     console.log('signup: ', response)
+//     // clientUser.verify(response, function (err, response) {
+//     //   console.log('====================================')
+//     //   console.log(err)
+//     //   console.log('====================================')
+//     //   console.log('verify: ', response)
+//     // })
+//   }
+// )
+
+clientUser.login(
+  {username: 'ayou6', password: 'youxingzhi'},
+  function name(err, response) {
+    console.log('===============login=====================')
     console.log(err)
     console.log('====================================')
-    console.log('signup: ', response)
-    // clientUser.verify(response, function (err, response) {
-    //   console.log('====================================')
-    //   console.log(err)
-    //   console.log('====================================')
-    //   console.log('verify: ', response)
-    // })
+    console.log('login: ', response)
+    clientUser.verify(response, function (err, response) {
+      console.log('====================================')
+      console.log(err)
+      console.log('====================================')
+      console.log('verify: ', response)
+    })
   }
 )
