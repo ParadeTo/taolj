@@ -2,7 +2,7 @@ import { Field, ID, ObjectType, Float, Int } from '@nestjs/graphql';
 
 @ObjectType({ description: 'item' })
 export class Item {
-  @Field(() => ID)
+  @Field()
   id: number;
 
   @Field()
@@ -14,7 +14,7 @@ export class Item {
 
 @ObjectType({ description: 'order' })
 export class Order {
-  @Field(() => ID)
+  @Field()
   id: number;
 
   @Field(() => Float)
@@ -29,9 +29,9 @@ export class Order {
 
 @ObjectType({ description: 'user' })
 export class User {
-  @Field(() => ID)
+  @Field()
   id: number;
 
   @Field()
-  name: number;
+  name: string;
 }

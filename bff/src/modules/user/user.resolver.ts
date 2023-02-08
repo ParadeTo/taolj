@@ -1,11 +1,4 @@
-import {
-  Resolver,
-  Query,
-  Args,
-  ID,
-  ResolveField,
-  Parent,
-} from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 import { User } from 'src/models';
 import { UserService } from './user.service';
 
@@ -19,5 +12,10 @@ export class UserResolver {
   ) {
     const token = await this.userService.login(username, password);
     return token.content;
+  }
+  @Query(() => User)
+  async user(@Args('token', { type: () => String }) token: string) {
+    const user = await this.userService.verify(token);
+    return user;
   }
 }

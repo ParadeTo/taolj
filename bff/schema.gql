@@ -4,17 +4,23 @@
 
 """item"""
 type Item {
-  id: ID!
+  id: Float!
   name: String!
   url: String!
 }
 
 """order"""
 type Order {
-  id: ID!
+  id: Float!
   price: Float!
   createTime: Int!
   items: [Item!]!
+}
+
+"""user"""
+type User {
+  id: Float!
+  name: String!
 }
 
 type Query {
@@ -22,4 +28,5 @@ type Query {
   items(page: Int!, pageSize: Int!): [Item!]!
   order(id: ID!): Order!
   login(username: String!, password: String!): String!
+  user(token: String!): User!
 }
