@@ -11,7 +11,7 @@ var evalRPN = function (tokens) {
           res = a + b
           break
         case '-':
-          res = a - b
+          res = a + b
           break
         case '*':
           res = a * b
