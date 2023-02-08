@@ -8,29 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const microservices_1 = require("@nestjs/microservices");
-const path_1 = require("path");
 const item_service_1 = require("./item.service");
 const item_controller_1 = require("./item.controller");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            microservices_1.ClientsModule.register([
-                {
-                    name: 'orderClient',
-                    transport: microservices_1.Transport.GRPC,
-                    options: {
-                        url: 'localhost:9002',
-                        package: 'order',
-                        protoPath: (0, path_1.join)(__dirname, '../../proto/order.proto'),
-                    },
-                },
-            ]),
-        ],
         controllers: [item_controller_1.ItemController],
-        providers: [item_service_1.ItemService],
+        providers: [item_service_1.ItemService]
     })
 ], AppModule);
 exports.AppModule = AppModule;

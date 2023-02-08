@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package user;
+
+service UserService {
+  rpc verify (Token) returns (User) {}
+  rpc login (LoginParam) returns (Token) {}
+  rpc signup (SignupParam) returns (Token) {}
+}
+
+message Token {
+  string content = 1;
+}
+
+message User {
+  int32 id = 1;
+  string name = 2;
+}
+
+message LoginParam  {
+  string username = 1;
+  string password = 2;
+}
+
+message SignupParam {
+  string username = 1;
+  string password = 2;
+  string sessionId = 3;
+  string captcha = 4;
+}
+
