@@ -26,7 +26,10 @@ type User {
 type Query {
   item(id: ID!): Item!
   items(page: Int!, pageSize: Int!): [Item!]!
-  order(id: ID!): Order!
-  login(username: String!, password: String!): String!
   user(token: String!): User!
+  order(id: ID!): Order!
+}
+
+type Mutation {
+  login(username: String!, password: String!): String!
 }

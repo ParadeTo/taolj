@@ -1,8 +1,11 @@
+import { UseGuards } from '@nestjs/common';
 import { Resolver, Query, Args, ID, Int } from '@nestjs/graphql';
+import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { Item } from 'src/models';
 import { ItemService } from './item.service';
 
 @Resolver(() => Item)
+@UseGuards(JwtAuthGuard)
 export class ItemResolver {
   constructor(private readonly itemService: ItemService) {}
 
