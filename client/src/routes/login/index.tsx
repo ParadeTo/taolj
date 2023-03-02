@@ -19,16 +19,11 @@ function Login() {
     `
   )
 
-  useEffect(() => {
-    if (data) {
-      localStorage.setItem('token', data.login)
-      console.log(data)
-    }
-  }, [data])
-
   const onFinish = async (values: LoginParam) => {
-    login({variables: values})
+    const {data} = await login({variables: values})
+    if (data?.login) localStorage.setItem('token', data.login)
   }
+
   return (
     <Form
       name='form'
