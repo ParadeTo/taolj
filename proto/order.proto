@@ -4,16 +4,22 @@ package order;
 
 option go_package = "./pb;pb";
 
-import "common.proto";
 
 service OrderService {
   rpc FindOne (OrderById) returns (Order) {}
-  rpc GetOrders (common.Pagination) returns (Orders) {}
+  rpc GetOrders (GetOrdersParams) returns (Orders) {}
 
+}
+
+message GetOrdersParams {
+  int32 page = 1;
+  int32 pageSize = 2;
+  int32 userId = 3;
 }
 
 message OrderById {
   int32 id = 1;
+  int32 userId = 2;
 }
 
 message Order {

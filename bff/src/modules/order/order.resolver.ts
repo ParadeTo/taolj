@@ -7,8 +7,9 @@ import {
   ResolveField,
   Parent,
 } from '@nestjs/graphql';
+import { CurrentUser } from 'src/decorators/user';
 import { JwtAuthGuard } from 'src/guards/jwt.guard';
-import { Order } from 'src/models';
+import { Order, User } from 'src/models';
 import { Order as OrderFromRPC } from '../../gen-code/Order';
 import { ItemService } from '../item/item.service';
 import { OrderService } from './order.service';
@@ -22,9 +23,11 @@ export class OrderResolver {
   ) {}
 
   @Query(() => Order)
-  async order(@Args('id', { type: () => ID }) id: number) {
+  async order(
+    @Args('id', { type: () => ID }) id: number,
+    @CurrentUser() user: User,
+  ) {
     const order = await this.orderService.findOne(id);
-
     return order;
   }
 

@@ -17,8 +17,7 @@ import { UserService } from './user.service';
 @UserServiceControllerMethods()
 export class UserController implements UserServiceController {
   constructor(
-    private readonly jwtService: JwtService,
-    private userService: UserService,
+    private readonly jwtService: JwtService, // private userService: UserService,
   ) {}
 
   verify(request: Token): User | Promise<User> | Observable<User> {
@@ -26,28 +25,35 @@ export class UserController implements UserServiceController {
     return payload;
   }
   async login(request: LoginParam): Promise<Token> {
-    const user = await this.userService.findOne({ name: request.username });
-    if (user) {
-      if (await compare(request.password, user.password)) {
-        return {
-          content: this.jwtService.sign({
-            id: user.id,
-            name: user.name,
-          }),
-        };
-      }
-    }
-    return { content: null };
+    // const user = await this.userService.findOne({ name: request.username });
+    // if (user) {
+    //   if (await compare(request.password, user.password)) {
+    //     return {
+    //       content: this.jwtService.sign({
+    //         id: user.id,
+    //         name: user.name,
+    //       }),
+    //     };
+    //   }
+    // }
+
+    // return { content: null };
+
+    return {
+      content: this.jwtService.sign({ id: 1, name: 'ayou' }),
+    };
   }
   async signup(request: SignupParam): Promise<Token> {
-    const user = await this.userService.findOne({ name: request.username });
+    // const user = await this.userService.findOne({ name: request.username });
+    // if (user?.name === request.username) return { content: null };
+    // const id = await this.userService.insertOne(
+    //   request.username,
+    //   request.password,
+    // );
+    // return { content: this.jwtService.sign({ id, name: request.username }) };
 
-    if (user?.name === request.username) return { content: null };
-    const id = await this.userService.insertOne(
-      request.username,
-      request.password,
-    );
-
-    return { content: this.jwtService.sign({ id, name: request.username }) };
+    return {
+      content: this.jwtService.sign({ id: 1, name: 'ayou' }),
+    };
   }
 }

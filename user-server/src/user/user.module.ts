@@ -7,7 +7,7 @@ import { User } from 'src/entity/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    // TypeOrmModule.forFeature([User]),
     JwtModule.register({ secret: 'hard!to-guess_secret' }),
   ],
   providers: [UserService],
