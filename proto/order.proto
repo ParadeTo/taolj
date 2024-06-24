@@ -4,31 +4,31 @@ package order;
 
 option go_package = "./pb;pb";
 
-import "google/protobuf/timestamp.proto";
 
 service OrderService {
   rpc FindOne (OrderById) returns (Order) {}
-  rpc FindOneWithItem (OrderById) returns (OrderWithItemInfo) {}
+  rpc GetOrders (GetOrdersParams) returns (Orders) {}
 
+}
+
+message GetOrdersParams {
+  int32 page = 1;
+  int32 pageSize = 2;
+  int32 userId = 3;
 }
 
 message OrderById {
   int32 id = 1;
+  int32 userId = 2;
 }
 
 message Order {
   int32 id = 1;
   float price = 2;
-  google.protobuf.Timestamp createTime = 3;
+  int64 createTime = 3;
+  repeated int32 itemIds = 4;
 }
 
-message OrderWithItemInfo {
-  int32 id = 1;
-  float price = 2;
-  google.protobuf.Timestamp createTime = 3;
-  message Item {
-    int32 id = 1;
-    string name = 2;
-  }
-  Item item = 4;
+message Orders {
+  repeated Order orders = 1;
 }

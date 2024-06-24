@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package order;
+
+option go_package = "./pb;pb";
+
+import "common.proto";
+
+service OrderService {
+  rpc FindOne (OrderById) returns (Order) {}
+  rpc GetOrders (common.Pagination) returns (Orders) {}
+
+}
+
+message OrderById {
+  int32 id = 1;
+}
+
+message Order {
+  int32 id = 1;
+  float price = 2;
+  int64 createTime = 3;
+  repeated int32 itemIds = 4;
+}
+
+message Orders {
+  repeated Order orders = 1;
+}

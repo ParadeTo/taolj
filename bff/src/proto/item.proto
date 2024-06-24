@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package item;
+
+import "common.proto";
+
+service ItemService {
+  rpc FindOne (ItemById) returns (Item) {}
+  rpc GetItems (common.Pagination) returns (Items) {}
+}
+
+message ItemById {
+  int32 id = 1;
+}
+
+message Item {
+  int32 id = 1;
+  string name = 2;
+  string url = 3;
+}
+
+message Items {
+  repeated Item list = 1;
+}

@@ -1,0 +1,27 @@
+.app {
+  height: 100vh;
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+}
+
+.nav {
+  --height: 45px;
+  --border-bottom: none;
+  display: flex;
+  align-items: center;
+  height: var(--height);
+  border-bottom: var(--border-bottom);
+  padding: 0 12px;
+  white-space: nowrap;
+}
+
+.body {
+  flex: 1 1;
+  display: flex;
+}
+
+.tabBar {
+  flex: 0 1;
+  border-top: 1px solid #eee;
+}

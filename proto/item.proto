@@ -2,12 +2,11 @@ syntax = "proto3";
 
 package item;
 
-option go_package = "./pb;pb";
-
-import "order.proto";
+import "common.proto";
 
 service ItemService {
   rpc FindOne (ItemById) returns (Item) {}
+  rpc GetItems (common.Pagination) returns (Items) {}
 }
 
 message ItemById {
@@ -17,10 +16,9 @@ message ItemById {
 message Item {
   int32 id = 1;
   string name = 2;
+  string url = 3;
 }
 
-message ItemWithOrderInfo {
-  int32 id = 1;
-  string name = 2;
-  order.Order order = 3;
+message Items {
+  repeated Item list = 1;
 }

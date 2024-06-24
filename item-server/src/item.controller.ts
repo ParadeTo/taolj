@@ -1,31 +1,31 @@
-import { Controller, Inject } from '@nestjs/common';
-import { ClientGrpc } from '@nestjs/microservices';
-import { lastValueFrom, Observable } from 'rxjs';
+import { Controller } from '@nestjs/common';
+import { Pagination } from './gen-code/common';
 import {
   Item,
+  Items,
   ItemServiceController,
-  ItemServiceControllerMethods,
+  ItemServiceControllerMethods
 } from './gen-code/item';
-import { ItemById, ItemWithOrderInfo } from './gen-code/item';
-import { Order } from './gen-code/order';
-import { ItemService } from './item.service';
+import { ItemById } from './gen-code/item';
 
 const items = [
-  { id: 1, name: 'John' },
-  { id: 2, name: 'Doe' },
+  {
+    id: 1,
+    name: 'Banana Peel',
+    url: 'https://images.indianexpress.com/2021/10/banana-peel-1200.jpg'
+  },
+  {
+    id: 2,
+    name: 'Waste Paper',
+    url: 'https://www.wpt-nl.com/images/module_image/img1_800_600_1593777835.jpg'
+  }
 ];
 
 @Controller('item')
 @ItemServiceControllerMethods()
 export class ItemController implements ItemServiceController {
-  constructor(private itemService: ItemService) {}
-  async findOneWithOrder(request: ItemById): Promise<ItemWithOrderInfo> {
-    const order = await lastValueFrom<Order>(
-      this.itemService.orderClient.findOne({ id: 1 }),
-    );
-
-    const item = items.find(({ id }) => id === request.id);
-    return { ...item, order };
+  getItems(request: Pagination): Items {
+    return { list: items };
   }
   findOne(data: ItemById): Item {
     return items.find(({ id }) => id === data.id);

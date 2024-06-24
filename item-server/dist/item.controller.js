@@ -5,27 +5,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ItemController = void 0;
 const common_1 = require("@nestjs/common");
-const rxjs_1 = require("rxjs");
 const item_1 = require("./gen-code/item");
-const item_service_1 = require("./item.service");
 const items = [
-    { id: 1, name: 'John' },
-    { id: 2, name: 'Doe' },
+    {
+        id: 1,
+        name: 'Banana Peel',
+        url: 'https://images.indianexpress.com/2021/10/banana-peel-1200.jpg'
+    },
+    {
+        id: 2,
+        name: 'Waste Paper',
+        url: 'https://www.wpt-nl.com/images/module_image/img1_800_600_1593777835.jpg'
+    }
 ];
 let ItemController = class ItemController {
-    constructor(itemService) {
-        this.itemService = itemService;
-    }
-    async findOneWithOrder(request) {
-        const order = await (0, rxjs_1.lastValueFrom)(this.itemService.orderClient.findOne({ id: 1 }));
-        const item = items.find(({ id }) => id === request.id);
-        return Object.assign(Object.assign({}, item), { order });
+    getItems(request) {
+        return { list: items };
     }
     findOne(data) {
         return items.find(({ id }) => id === data.id);
@@ -33,8 +31,7 @@ let ItemController = class ItemController {
 };
 ItemController = __decorate([
     (0, common_1.Controller)('item'),
-    (0, item_1.ItemServiceControllerMethods)(),
-    __metadata("design:paramtypes", [item_service_1.ItemService])
+    (0, item_1.ItemServiceControllerMethods)()
 ], ItemController);
 exports.ItemController = ItemController;
 //# sourceMappingURL=item.controller.js.map

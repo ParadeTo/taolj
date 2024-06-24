@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
-import { Order } from "./order";
+import { Pagination } from "./common";
 
 export const protobufPackage = "item";
 
@@ -12,12 +12,11 @@ export interface ItemById {
 export interface Item {
   id: number;
   name: string;
+  url: string;
 }
 
-export interface ItemWithOrderInfo {
-  id: number;
-  name: string;
-  order: Order | undefined;
+export interface Items {
+  list: Item[];
 }
 
 export const ITEM_PACKAGE_NAME = "item";
@@ -25,18 +24,18 @@ export const ITEM_PACKAGE_NAME = "item";
 export interface ItemServiceClient {
   findOne(request: ItemById): Observable<Item>;
 
-  findOneWithOrder(request: ItemById): Observable<ItemWithOrderInfo>;
+  getItems(request: Pagination): Observable<Items>;
 }
 
 export interface ItemServiceController {
   findOne(request: ItemById): Promise<Item> | Observable<Item> | Item;
 
-  findOneWithOrder(request: ItemById): Promise<ItemWithOrderInfo> | Observable<ItemWithOrderInfo> | ItemWithOrderInfo;
+  getItems(request: Pagination): Promise<Items> | Observable<Items> | Items;
 }
 
 export function ItemServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["findOne", "findOneWithOrder"];
+    const grpcMethods: string[] = ["findOne", "getItems"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("ItemService", method)(constructor.prototype[method], method, descriptor);
